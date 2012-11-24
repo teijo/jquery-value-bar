@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jQuery value-bar component demos</title>
+<script src='lib/prelude-browser-0.6.0.min.js' type='text/javascript'></script>
+<script src='lib/jquery-1.8.2.min.js' type='text/javascript'></script>
+<script src='jquery-value-bar.js' type='text/javascript'></script>
+<style type='text/css'>
+article {
+  max-width: 920px;
+}
+pre {
+  background-color: #EEE;
+  padding: 3px;
+  margin: 3px;
+  max-width: 800px;
+}
+.code {
+  width: 800px;
+  display: inline-block;
+  clear: both;
+}
+.js, .css {
+  float: left;
+  width: 50%;
+}
+.valueBar {
+  margin: 10px;
+}
+.valueBar {
+  background-color: #999;
+  height: 20px;
+  width: 200px;
+}
+.valueBar > div {
+  background-color: #999;
+  height: 100%;
+  float: left;
+  display: inline-block;
+  cursor: pointer;
+}
+.valueBar div div {
+  background-color: #DDD;
+  height: inherit;
+  border: 1px solid #999;
+}
+.valueBar div.active div {
+  background-color: #0CF;
+}
+.valueBar div.highlight div {
+  background-color: yellow;
+}
+.valueBar div.highlight.active div {
+  background-color: lime;
+}
+</style>
+<script>
+function printer(id, def) {
+  return function(value) {
+    if (typeof value == 'undefined')
+      value = def
+    $(id).text(value)
+  }
+}
+$(function() {
+  var list = [[1, "Default"],
+    [2, "Change default colors"],
+    [3, "Simple transition animation"],
+    [4, "Input from outside"],
+    [5, "Rounder corners"]]
+  $.each(list, function(i, e) {
+    i++
+    var demo = $('#demo-'+i)
+    demo.append('<h2>'+e[1]+'</h2>')
+    demo.append('<div id="slider'+i+'"></div>')
+    demo.append('<div>onchange(): <span id="value-'+i+'"></span></div>')
+    demo.append('<div>onmouseover(): <span id="over-'+i+'"></span></div>')
+    var code = $('<div class="code"></div>').appendTo(demo)
+    var js = $('<div class="js"></div>').appendTo(code)
+    var css = $('<div class="css"></div>').appendTo(code)
+    js.append('<h3>JavaScript</h3>')
+    var pre = $('<pre>').appendTo(js)
+    pre.text($('#script-'+i).text())
+    css.append('<h3>CSS</h3>')
+    pre = $('<pre>').appendTo(css)
+    pre.text($('#style-'+i).text())
+  })
+})
+</script>
+</head>
+<body>
+<h1>jQuery value-bar plugin</h1>
+<article>
+<p>This is a very lightweight UI component written in
+<a href="http://livescript.net">LiveScript</a> for picking a value from
+predefined range. The purpose is to create as simple markup as possible with no
+preset styles so that it can be customized for your needs with minimal
+overhead. Demos below are there to give some ideas what you could do
+with it.</p>
+<ul>
+<li>The source code is <a href="https://github.com/teijo/jquery-value-bar">hosted in GitHub</a></li>
+<li>The project page is at <a href="http://aropupu.fi/value-bar">http://aropupu.fi/value-bar</a></li>
+</ul>
+<h2>Usage</h2>
+<pre>
+HTML:
+
+&lt;div id="container-id"&gt;&lt/div&gt;
+
+JavaScript:
+
+$('#container-id').valueBar({value: 1, max: 3})
+
+State of generated HTML when value 2 is hovered by mouse:
+
+&lt;!-- Container gets "valueBar" class --&gt;
+&lt;div class="valueBar" id="container-id"&gt;
+  &lt;!-- Blocks from first to "value" get "active" class --&gt;
+  &lt;div width="33%" class="highlight active"&gt;
+    &lt;div&gt;&lt/div&gt;
+  &lt/div&gt;
+  &lt;!-- Hover adds "highlight" class from first to hovered block --&gt;
+  &lt;div width="33%" class="highlight"&gt;
+    &lt;div&gt;&lt/div&gt;
+  &lt/div&gt;
+  &lt;div width="33%"&gt;
+    &lt;div&gt;&lt/div&gt;
+  &lt/div&gt;
+&lt/div&gt;
+</pre>
+<div id="demo-1">
+<script id="script-1">
+$(function() {
+  $('#slider1').valueBar(
+    { value: 3,
+      max: 10,
+      onchange: printer('#value-1'),
+      onmouseover: printer('#over-1'),
+      onmouseout: printer('#over-1', 'out')
+    }
+  )
+})
+</script>
+<style id="style-1" type='text/css'>
+#slider1 {
+}
+</style>
+</div>
+
+<div id="demo-2">
+<script id="script-2">
+$(function() {
+  $('#slider2').valueBar(
+    { value: 2,
+      max: 4,
+      onchange: printer('#value-2'),
+      onmouseover: printer('#over-2'),
+      onmouseout: printer('#over-2', 'out')
+    }
+  )
+})
+</script>
+<style id="style-2" type='text/css'>
+#slider2 div div {
+  border-color: #600;
+  background-color: #300;
+}
+#slider2 div.active div {
+  background-color: #900;
+}
+#slider2 div.highlight div {
+  background-color: #FF0;
+}
+#slider2 div.highlight.active div {
+  background-color: #FC0;
+}
+</style>
+</div>
+
+<div id="demo-3">
+<script id="script-3">
+$(function() {
+  $('#slider3').valueBar(
+    { value: 10,
+      max: 20,
+      onchange: printer('#value-3'),
+      onmouseover: printer('#over-3'),
+      onmouseout: printer('#over-3', 'out')
+    }
+  )
+})
+</script>
+<style id="style-3" type='text/css'>
+#slider3 {
+  width: 700px;
+  height: 30px;
+}
+#slider3 div div {
+  -webkit-transition: all 0.5s;
+  background-color: #003;
+  border: none;
+}
+#slider3 div.active div {
+  background-color: #09F;
+}
+#slider3 div.highlight div {
+  background-color: #FF0;
+}
+#slider3 div.highlight.active div {
+  background-color: #0CF;
+}
+</style>
+</div>
+
+<div id="demo-4">
+<script id="script-4">
+$(function() {
+  $('#slider4').valueBar(
+    { value: 17,
+      max: 20,
+      onchange: printer('#value-4'),
+      onmouseover: printer('#over-4'),
+      onmouseout: printer('#over-4', 'out')
+    }
+  )
+  setInterval(function() {
+    $('#slider4').valueBar('set', (Math.ceil(Math.random()*20)))
+  }, 1000)
+})
+</script>
+<style id="style-4" type="text/css">
+#slider4 {
+  width: 600px;
+  height: 30px;
+}
+</style>
+</div>
+
+<div id="demo-5">
+<style id="style-5" type='text/css'>
+#slider5 div div {
+  border: none;
+  margin: 0 1px;
+}
+#slider5, #slider5 > div, #slider5 > div {
+  background-color: transparent;
+}
+#slider5 div.active:first-child div {
+  border-radius: 10px 0 0 10px;
+}
+#slider5 div.active:last-child div,
+#slider5 div:last-child div {
+  border-radius: 0 10px 10px 0;
+}
+#slider5 div.highlight:last-child div {
+  border-radius: 0 10px 10px 0;
+}
+</style>
+<script id="script-5">
+$(function() {
+  $('#slider5').valueBar(
+    { value: 2,
+      max: 5,
+      onchange: printer('#value-5'),
+      onmouseover: printer('#over-5'),
+      onmouseout: printer('#over-5', 'out')
+    }
+  )
+})
+</script>
+</div>
+</article>
+
+</body>
+</html>
+
