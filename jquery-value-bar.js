@@ -22,6 +22,7 @@
           $this.addClass('valueBar');
           $this.data('bars', []);
           $this.data('args', options);
+          $this.data('value', options.value);
           hl = function(value, cls, state){
             state == null && (state = true);
             return highlight($this.data('bars'), value, cls, state);
@@ -49,12 +50,19 @@
             value = $(this).data('value');
             hl(value, 'active');
             options.onchange(value);
+            $this.data('value', value);
           }
         });
       },
-      set: function(args){
-        highlight(this.data('bars'), args, 'active');
-        return this.data('args').onchange(args);
+      value: function(args){
+        if (args === void 8) {
+          return this.data('value');
+        } else {
+          highlight(this.data('bars'), args, 'active');
+          this.data('args').onchange(args);
+          this.data('value', args);
+          return args;
+        }
       }
     };
     return $.fn.valueBar = function(method){

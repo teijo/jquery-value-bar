@@ -10,6 +10,7 @@
         $this.addClass \valueBar
         $this.data \bars, []
         $this.data \args, options
+        $this.data \value, options.value
         hl = (value, cls, state = true) -> highlight $this.data(\bars), value, cls, state
 
         for i from 1 to options.max
@@ -26,12 +27,18 @@
             value = ($ this .data \value)
             hl value, \active
             options.onchange(value)
+            $this.data \value, value
           el.append($ '<div>')
           ($this.data \bars).push el
         hl options.value, \active
-    set: (args) ->
-      highlight this.data(\bars), args, \active
-      this.data \args .onchange args
+    value: (args) ->
+      if args == undefined
+        this.data \value
+      else
+        highlight this.data(\bars), args, \active
+        this.data \args .onchange args
+        this.data \value, args
+        args
 
   $.fn.valueBar = (method) ->
     if methods[method]
