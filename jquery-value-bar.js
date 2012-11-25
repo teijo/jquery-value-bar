@@ -49,8 +49,8 @@
             var value;
             value = $(this).data('value');
             hl(value, 'active');
-            options.onchange(value);
             $this.data('value', value);
+            options.onchange(value);
           }
         });
       },
@@ -59,8 +59,8 @@
           return this.data('value');
         } else {
           highlight(this.data('bars'), args, 'active');
-          this.data('args').onchange(args);
           this.data('value', args);
+          this.data('args').onchange(args);
           return args;
         }
       }
