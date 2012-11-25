@@ -1,0 +1,29 @@
+.valueBar {
+  margin: 10px;
+}
+.valueBar {
+  background-color: #999;
+  height: 20px;
+  width: 200px;
+}
+.valueBar > div {
+  background-color: #999;
+  height: 100%;
+  float: left;
+  display: inline-block;
+  cursor: pointer;
+}
+.valueBar div div {
+  background-color: #DDD;
+  height: inherit;
+  border: 1px solid #999;
+}
+.valueBar div.active div {
+  background-color: #0CF;
+}
+.valueBar div.highlight div {
+  background-color: yellow;
+}
+.valueBar div.highlight.active div {
+  background-color: lime;
+}
