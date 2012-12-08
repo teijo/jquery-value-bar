@@ -122,9 +122,15 @@ $(function() {
   $('#slider1').valueBar(
     { value: 3,
       max: 10,
-      onchange: printer('#value-1'),
-      onmouseover: printer('#over-1'),
-      onmouseout: printer('#over-1', 'out')
+      onchange: function(value) {
+        $('#value-1').text(value)
+      },
+      onmouseover: function(value) {
+        $('#over-1').text(value)
+      },
+      onmouseout: function() {
+        $('#over-1').text("out")
+      }
     }
   )
 })
