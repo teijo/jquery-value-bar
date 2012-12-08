@@ -21,6 +21,7 @@
           width = baseWidth + (if remainder-- > 0 then 1 else 0)
 
           el = $('<div data-value="'+i+'" style="width: '+width+'px">').appendTo($this)
+
           el.hover(
             (! ->
               value = $ this .data \value
@@ -29,14 +30,17 @@
             (! ->
               hl ($ this .data \value), \highlight, false
               options.onmouseout!))
+
           el.click ! ->
             value = ($ this .data \value)
             hl value, \active
             $this.data \value, value
             options.onchange(value)
-          el.append($ '<div>')
-          ($this.data \bars).push el
+
+          ($this.data \bars).push el.append($ '<div>')
+
         hl options.value, \active
+
     value: (args) ->
       if args == undefined
         this.data \value

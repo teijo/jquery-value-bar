@@ -35,8 +35,7 @@
             el = $('<div data-value="' + i + '" style="width: ' + width + 'px">').appendTo($this);
             el.hover(fn$, fn1$);
             el.click(fn2$);
-            el.append($('<div>'));
-            $this.data('bars').push(el);
+            $this.data('bars').push(el.append($('<div>')));
           }
           hl(options.value, 'active');
           function fn$(){
