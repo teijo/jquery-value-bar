@@ -77,7 +77,7 @@
       onmouseout: function(){},
       onchange: function(){}
     };
-    return $.fn.valueBar = function(method){
+    $.fn.valueBar = function(method){
       if (methods[method]) {
         return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
       } else if (typeof method === 'object' || !method) {
@@ -89,7 +89,7 @@
         return $.error("Method " + method + " does not exist on jQuery.valueBar");
       }
     };
-  })(jQuery);
+  }.call(this, jQuery));
   function import$(obj, src){
     var own = {}.hasOwnProperty;
     for (var key in src) if (own.call(src, key)) obj[key] = src[key];

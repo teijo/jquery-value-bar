@@ -1,4 +1,4 @@
-(($) ->
+let $ = jQuery
   highlight = (bars, n, cls, state) ->
     each (-> $(it).toggleClass(cls, false)), bars
     each (-> $(it).toggleClass(cls, state)), take n, bars
@@ -66,4 +66,3 @@
       return methods.init.apply @, [defaults with arguments[0]]
     else
       $.error "Method #method does not exist on jQuery.valueBar"
-)(jQuery)
