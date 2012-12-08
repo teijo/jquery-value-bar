@@ -14,7 +14,8 @@ article {
   max-width: 920px;
 }
 pre {
-  background-color: #EEE;
+  background-color: #666;
+  color: #EEE;
   padding: 3px;
   margin: 3px;
   max-width: 800px;
@@ -38,13 +39,14 @@ function printer(id, def) {
   }
 }
 $(function() {
-  var list = [[1, "Default"],
+  var list = [
+    [0, "Zero configuration"],
+    [1, "Prominent steps"],
     [2, "Change default colors"],
     [3, "Simple transition animation"],
     [4, "Input from outside"],
     [5, "Rounder corners"]]
   $.each(list, function(i, e) {
-    i++
     var demo = $('#demo-'+i)
     demo.append('<h2>'+e[1]+'</h2>')
     demo.append('<div id="slider'+i+'"></div>')
@@ -103,6 +105,17 @@ State of generated HTML when value 2 is hovered by mouse:
   &lt/div&gt;
 &lt/div&gt;
 </pre>
+
+<div id="demo-0">
+<script id="script-0">
+$(function() {
+  $('#slider0').valueBar()
+})
+</script>
+<style id="style-0" type='text/css'>
+</style>
+</div>
+
 <div id="demo-1">
 <script id="script-1">
 $(function() {
@@ -118,6 +131,13 @@ $(function() {
 </script>
 <style id="style-1" type='text/css'>
 #slider1 {
+  border: 1px solid #999;
+}
+#slider1 div div {
+  border-left: 1px solid #999;
+}
+#slider1 div:first-child div {
+  border-left: none;
 }
 </style>
 </div>
@@ -127,7 +147,7 @@ $(function() {
 $(function() {
   $('#slider2').valueBar(
     { value: 2,
-      max: 4,
+      max: 6,
       onchange: printer('#value-2'),
       onmouseover: printer('#over-2'),
       onmouseout: printer('#over-2', 'out')
@@ -136,6 +156,10 @@ $(function() {
 })
 </script>
 <style id="style-2" type='text/css'>
+#slider2 {
+  border: 5px solid #F00;
+  height: 40px;
+}
 #slider2 div div {
   border-color: #600;
   background-color: #300;
@@ -171,9 +195,9 @@ $(function() {
   height: 30px;
 }
 #slider3 div div {
-  -webkit-transition: all 0.5s;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
   background-color: #003;
-  border: none;
 }
 #slider3 div.active div {
   background-color: #09F;
@@ -214,7 +238,6 @@ $(function() {
 <div id="demo-5">
 <style id="style-5" type='text/css'>
 #slider5 div div {
-  border: none;
   margin: 0 1px;
 }
 #slider5, #slider5 > div, #slider5 > div {

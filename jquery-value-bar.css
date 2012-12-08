@@ -2,7 +2,6 @@
   background-color: #999;
   height: 20px;
   width: 200px;
-  border: 1px solid #333;
   box-sizing: border-box;
 }
 .valueBar > div {
@@ -15,18 +14,14 @@
 .valueBar div div {
   background-color: #DDD;
   height: inherit;
-  border-left: 1px solid #999;
   box-sizing: border-box;
 }
-.valueBar div:first-child div {
-  border-left: none;
-}
 .valueBar div.active div {
-  background-color: #0CF;
+  background-color: #333;
 }
 .valueBar div.highlight div {
-  background-color: yellow;
+  background-color: #999;
 }
 .valueBar div.highlight.active div {
-  background-color: lime;
+  background-color: #666;
 }
