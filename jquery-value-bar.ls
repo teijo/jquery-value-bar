@@ -12,9 +12,15 @@
         $this.data \args, options
         $this.data \value, options.value
         hl = (value, cls, state = true) -> highlight $this.data(\bars), value, cls, state
+        contentWidth = $this.width()
+        remainder = contentWidth % options.max
+        baseWidth = (contentWidth - remainder) / options.max
 
         for i from 1 to options.max
-          el = $('<div data-value="'+i+'" style="width: '+(100/options.max)+'%">').appendTo($this)
+          # Distribute remainder to first blocks
+          width = baseWidth + (if remainder-- > 0 then 1 else 0)
+
+          el = $('<div data-value="'+i+'" style="width: '+width+'px">').appendTo($this)
           el.hover(
             (! ->
               value = $ this .data \value

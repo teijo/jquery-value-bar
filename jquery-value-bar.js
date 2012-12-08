@@ -17,7 +17,7 @@
     methods = {
       init: function(options){
         return this.each(function(){
-          var $this, hl, i, to$, el;
+          var $this, hl, contentWidth, remainder, baseWidth, i, to$, width, el;
           $this = $(this);
           $this.addClass('valueBar');
           $this.data('bars', []);
@@ -27,8 +27,12 @@
             state == null && (state = true);
             return highlight($this.data('bars'), value, cls, state);
           };
+          contentWidth = $this.width();
+          remainder = contentWidth % options.max;
+          baseWidth = (contentWidth - remainder) / options.max;
           for (i = 1, to$ = options.max; i <= to$; ++i) {
-            el = $('<div data-value="' + i + '" style="width: ' + 100 / options.max + '%">').appendTo($this);
+            width = baseWidth + (remainder-- > 0 ? 1 : 0);
+            el = $('<div data-value="' + i + '" style="width: ' + width + 'px">').appendTo($this);
             el.hover(fn$, fn1$);
             el.click(fn2$);
             el.append($('<div>'));
