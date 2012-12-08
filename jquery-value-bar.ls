@@ -5,8 +5,8 @@
 
   methods =
     init: (options) ->
-      this.each !->
-        $this = $ this
+      @each !->
+        $this = $ @
           ..addClass \valueBar
           ..data \bars, []
           ..data \args, options
@@ -25,14 +25,14 @@
             ..append($ \<div>)
             ..hover(
               (! ->
-                value = $ this .data \value
+                value = $ @ .data \value
                 hl value, \highlight, true
                 options.onmouseover value),
               (! ->
-                hl ($ this .data \value), \highlight, false
+                hl ($ @ .data \value), \highlight, false
                 options.onmouseout!))
             ..click ! ->
-              value = ($ this .data \value)
+              value = ($ @ .data \value)
               hl value, \active
               $this.data \value, value
               options.onchange(value)
@@ -43,11 +43,11 @@
 
     value: (args) ->
       if args == undefined
-        this.data \value
+        @data \value
       else
-        highlight this.data(\bars), args, \active
-        this.data \value, args
-        this.data \args .onchange args
+        highlight @data(\bars), args, \active
+        @data \value, args
+        @data \args .onchange args
         args
 
   defaults =
@@ -59,11 +59,11 @@
 
   $.fn.valueBar = (method) ->
     if methods[method]
-      return methods[method].apply this, Array.prototype.slice.call(arguments, 1)
+      return methods[method].apply @, Array.prototype.slice.call(arguments, 1)
     else if typeof method is \object or !method
       if arguments.length > 1
         $.error "jQuery.valueBar takes only a single object"
-      return methods.init.apply this, [defaults with arguments[0]]
+      return methods.init.apply @, [defaults with arguments[0]]
     else
       $.error "Method #method does not exist on jQuery.valueBar"
 )(jQuery)
