@@ -5,7 +5,7 @@
     require('prelude-ls').installPrelude(global);
   };
   (function($){
-    var highlight, methods;
+    var highlight, methods, defaults;
     highlight = function(bars, n, cls, state){
       each(function(it){
         return $(it).toggleClass(cls, false);
@@ -68,14 +68,33 @@
         }
       }
     };
+    defaults = {
+      value: 0,
+      max: 5,
+      onmouseover: function(){},
+      onmouseout: function(){},
+      onchange: function(){}
+    };
     return $.fn.valueBar = function(method){
       if (methods[method]) {
         return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
       } else if (typeof method === 'object' || !method) {
-        return methods.init.apply(this, arguments);
+        if (arguments.length > 1) {
+          $.error('jQuery.valueBar takes only a single object');
+        }
+        return methods.init.apply(this, [import$(clone$(defaults), arguments[0])]);
       } else {
         return $.error('Method ' + method + ' does not exist on jQuery.valueBar');
       }
     };
   })(jQuery);
+  function import$(obj, src){
+    var own = {}.hasOwnProperty;
+    for (var key in src) if (own.call(src, key)) obj[key] = src[key];
+    return obj;
+  }
+  function clone$(it){
+    function fun(){} fun.prototype = it;
+    return new fun;
+  }
 }).call(this);

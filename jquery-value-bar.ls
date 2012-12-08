@@ -50,11 +50,20 @@
         this.data \args .onchange args
         args
 
+  defaults =
+    value: 0
+    max: 5
+    onmouseover: !->
+    onmouseout: !->
+    onchange: !->
+
   $.fn.valueBar = (method) ->
     if methods[method]
       return methods[method].apply this, Array.prototype.slice.call(arguments, 1)
     else if typeof method == 'object' or !method
-      return methods.init.apply this, arguments
+      if arguments.length > 1
+        $.error('jQuery.valueBar takes only a single object')
+      return methods.init.apply this, [defaults with arguments[0]]
     else
       $.error('Method ' +  method + ' does not exist on jQuery.valueBar')
 )(jQuery)
