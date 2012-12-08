@@ -7,10 +7,10 @@
     init: (options) ->
       this.each !->
         $this = $ this
-        $this.addClass \valueBar
-        $this.data \bars, []
-        $this.data \args, options
-        $this.data \value, options.value
+          ..addClass \valueBar
+          ..data \bars, []
+          ..data \args, options
+          ..data \value, options.value
         hl = (value, cls, state = true) -> highlight $this.data(\bars), value, cls, state
         contentWidth = $this.width()
         remainder = contentWidth % options.max
@@ -20,24 +20,24 @@
           # Distribute remainder to first blocks
           width = baseWidth + (if remainder-- > 0 then 1 else 0)
 
-          el = $('<div data-value="'+i+'" style="width: '+width+'px">').appendTo($this)
+          el = $ "<div data-value='#i' style='width: #{width}px'>"
+            ..appendTo($this)
+            ..append($ \<div>)
+            ..hover(
+              (! ->
+                value = $ this .data \value
+                hl value, \highlight, true
+                options.onmouseover value),
+              (! ->
+                hl ($ this .data \value), \highlight, false
+                options.onmouseout!))
+            ..click ! ->
+              value = ($ this .data \value)
+              hl value, \active
+              $this.data \value, value
+              options.onchange(value)
 
-          el.hover(
-            (! ->
-              value = $ this .data \value
-              hl value, \highlight, true
-              options.onmouseover value),
-            (! ->
-              hl ($ this .data \value), \highlight, false
-              options.onmouseout!))
-
-          el.click ! ->
-            value = ($ this .data \value)
-            hl value, \active
-            $this.data \value, value
-            options.onchange(value)
-
-          ($this.data \bars).push el.append($ '<div>')
+          ($this.data \bars).push el
 
         hl options.value, \active
 
@@ -60,10 +60,10 @@
   $.fn.valueBar = (method) ->
     if methods[method]
       return methods[method].apply this, Array.prototype.slice.call(arguments, 1)
-    else if typeof method == 'object' or !method
+    else if typeof method is \object or !method
       if arguments.length > 1
-        $.error('jQuery.valueBar takes only a single object')
+        $.error "jQuery.valueBar takes only a single object"
       return methods.init.apply this, [defaults with arguments[0]]
     else
-      $.error('Method ' +  method + ' does not exist on jQuery.valueBar')
+      $.error "Method #method does not exist on jQuery.valueBar"
 )(jQuery)

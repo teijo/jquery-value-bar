@@ -17,12 +17,12 @@
     methods = {
       init: function(options){
         return this.each(function(){
-          var $this, hl, contentWidth, remainder, baseWidth, i, to$, width, el;
-          $this = $(this);
-          $this.addClass('valueBar');
-          $this.data('bars', []);
-          $this.data('args', options);
-          $this.data('value', options.value);
+          var x$, $this, hl, contentWidth, remainder, baseWidth, i, to$, width, el;
+          x$ = $this = $(this);
+          x$.addClass('valueBar');
+          x$.data('bars', []);
+          x$.data('args', options);
+          x$.data('value', options.value);
           hl = function(value, cls, state){
             state == null && (state = true);
             return highlight($this.data('bars'), value, cls, state);
@@ -32,10 +32,12 @@
           baseWidth = (contentWidth - remainder) / options.max;
           for (i = 1, to$ = options.max; i <= to$; ++i) {
             width = baseWidth + (remainder-- > 0 ? 1 : 0);
-            el = $('<div data-value="' + i + '" style="width: ' + width + 'px">').appendTo($this);
-            el.hover(fn$, fn1$);
-            el.click(fn2$);
-            $this.data('bars').push(el.append($('<div>')));
+            x$ = el = $("<div data-value='" + i + "' style='width: " + width + "px'>");
+            x$.appendTo($this);
+            x$.append($('<div>'));
+            x$.hover(fn$, fn1$);
+            x$.click(fn2$);
+            $this.data('bars').push(el);
           }
           hl(options.value, 'active');
           function fn$(){
@@ -80,11 +82,11 @@
         return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
       } else if (typeof method === 'object' || !method) {
         if (arguments.length > 1) {
-          $.error('jQuery.valueBar takes only a single object');
+          $.error("jQuery.valueBar takes only a single object");
         }
         return methods.init.apply(this, [import$(clone$(defaults), arguments[0])]);
       } else {
-        return $.error('Method ' + method + ' does not exist on jQuery.valueBar');
+        return $.error("Method " + method + " does not exist on jQuery.valueBar");
       }
     };
   })(jQuery);
