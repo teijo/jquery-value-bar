@@ -17,12 +17,8 @@
     methods = {
       init: function(options){
         return this.each(function(){
-          var x$, $this, hl, contentWidth, remainder, baseWidth, i, to$, width, el;
-          x$ = $this = $(this);
-          x$.addClass('valueBar');
-          x$.data('bars', []);
-          x$.data('args', options);
-          x$.data('value', options.value);
+          var $this, hl, contentWidth, remainder, baseWidth, i, to$, width, el;
+          $this = $(this).addClass('valueBar').data('bars', []).data('args', options).data('value', options.value);
           hl = function(value, cls, state){
             state == null && (state = true);
             return highlight($this.data('bars'), value, cls, state);
@@ -32,11 +28,7 @@
           baseWidth = (contentWidth - remainder) / options.max;
           for (i = 1, to$ = options.max; i <= to$; ++i) {
             width = baseWidth + (remainder-- > 0 ? 1 : 0);
-            x$ = el = $("<div data-value='" + i + "' style='width: " + width + "px'>");
-            x$.appendTo($this);
-            x$.append($('<div>'));
-            x$.hover(fn$, fn1$);
-            x$.click(fn2$);
+            el = $("<div data-value='" + i + "' style='width: " + width + "px'>").appendTo($this).append($('<div>')).hover(fn$, fn1$).click(fn2$);
             $this.data('bars').push(el);
           }
           hl(options.value, 'active');

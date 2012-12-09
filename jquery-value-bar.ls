@@ -7,10 +7,10 @@ let $ = jQuery
     init: (options) ->
       @each !->
         $this = $ @
-          ..addClass \valueBar
-          ..data \bars, []
-          ..data \args, options
-          ..data \value, options.value
+          .addClass \valueBar
+          .data \bars, []
+          .data \args, options
+          .data \value, options.value
         hl = (value, cls, state = true) -> highlight $this.data(\bars), value, cls, state
         contentWidth = $this.width()
         remainder = contentWidth % options.max
@@ -21,9 +21,9 @@ let $ = jQuery
           width = baseWidth + (if remainder-- > 0 then 1 else 0)
 
           el = $ "<div data-value='#i' style='width: #{width}px'>"
-            ..appendTo($this)
-            ..append($ \<div>)
-            ..hover(
+            .appendTo($this)
+            .append($ \<div>)
+            .hover(
               (! ->
                 value = $ @ .data \value
                 hl value, \highlight, true
@@ -31,7 +31,7 @@ let $ = jQuery
               (! ->
                 hl ($ @ .data \value), \highlight, false
                 options.onmouseout!))
-            ..click ! ->
+            .click ! ->
               value = ($ @ .data \value)
               hl value, \active
               $this.data \value, value
